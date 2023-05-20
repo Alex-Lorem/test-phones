@@ -42,7 +42,7 @@ export function loadProducts () {
     id: 7
   },
   {
-    productName: 'IPhone 15 XS Max Pro 4S',
+    productName: 'IPhone 15 XS Max Pro',
     productDescription: 'Wonderful solution for wonderful people',
     productCost: 199,
     id: 8

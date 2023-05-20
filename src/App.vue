@@ -70,17 +70,7 @@ export default {
       }
       this.sum = sum
     },
-    updateCart () {
-      const productsInCart = cartHandler.getProductsInCart()
-      this.sumUpCost(productsInCart)
-      return true
-    },
-    handleCartAction () {
-      const productsInCart = cartHandler.getProductsInCart()
-      this.sumUpCost(productsInCart)
-      this.items.forEach((item) => {
-        item.count = 0
-      })
+    sortItemsByCart (productsInCart) {
       if (productsInCart.length) {
         this.productsInCart = productsInCart
         const matchedProducts = productsInCart.filter(({ id: id1 }) => this.items.some(({ id: id2 }) => id1 === id2))
@@ -91,25 +81,23 @@ export default {
           }
         }
       }
+    },
+    handleCartAction () {
+      const productsInCart = cartHandler.getProductsInCart()
+      this.sortItemsByCart(productsInCart)
+      this.sumUpCost(productsInCart)
     }
   },
   created () {
     this.items = products.loadProducts()
+    this.items.forEach((item) => {
+      item.count = 0
+    })
     cartHandler.initialiseCart()
     const productsInCart = cartHandler.getProductsInCart()
-    if (productsInCart.length) {
-      this.productsInCart = productsInCart
-      const matchedProducts = productsInCart.filter(({ id: id1 }) => this.items.some(({ id: id2 }) => id1 === id2))
-      for (let i = 0; i < this.items.length; i++) {
-        const itemInCart = matchedProducts.find(({ id }) => id === this.items[i].id)
-        if (itemInCart) {
-          this.items[i].count = itemInCart.count
-        }
-      }
-    }
+    this.sortItemsByCart(productsInCart)
     this.sumUpCost(productsInCart)
   }
 }
 </script>
-
-<style  lang="scss" src="./globals.scss"></style>
+<style lang="scss" src="./globals.scss"></style>
