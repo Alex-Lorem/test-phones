@@ -3,18 +3,16 @@
 
   <cart-icon class="cart-icon" @click="isCartOpened = !isCartOpened"/>
   <transition name="fade">
-  <div class="order" v-if="isCartOpened">
+    <div class="order" v-if="isCartOpened">
       <div class="order-form" v-if="isCartOpened">
-        <closeIcon  class="order-close" @click="isCartOpened = !isCartOpened" />
-        <div v-if="!(updateCart() && productsInCart.length)" class="order-nothing"> Nothing to Buy!</div>
-        <div v-else>
+        <closeIcon class="order-close" @click="isCartOpened = !isCartOpened" />
+        <div v-if="productsInCart.length > 0">
           <h3 class="order-title">Positions:</h3>
           <ul>
-            <template v-for="item in updateCart()" :key="item.id">
+            <template v-for="item in productsInCart" :key="item">
               <li class="order-position">
                 {{ item.name }}
                 {{ item.cost }}$
-
                 <order-actions
                   :id="item.id"
                   :count="item.count"
@@ -28,13 +26,13 @@
 
           <button class="order-pay">Pay: {{ this.sum }}$</button>
         </div>
-
+        <div v-else class="order-nothing"> Nothing to Buy!</div>
       </div>
-  </div>
+    </div>
   </transition>
   <div class="products">
-    <div class="product-wrapper" v-for="item in items" :key="item.id">
-      <product :item="item"/>
+    <div class="product-wrapper" v-for="item in items" :key="item">
+      <product :item="item" @handleCartAction="handleCartAction"/>
     </div>
   </div>
 </template>
@@ -75,7 +73,7 @@ export default {
     updateCart () {
       const productsInCart = cartHandler.getProductsInCart()
       this.sumUpCost(productsInCart)
-      return productsInCart
+      return true
     },
     handleCartAction () {
       const productsInCart = cartHandler.getProductsInCart()

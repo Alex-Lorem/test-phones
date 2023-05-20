@@ -9,9 +9,11 @@
       <div class="product-cost"> {{ item.productCost }} $</div>
       <order-actions
         :id="item.id"
-        :count="item.count"
+        :count="item.count || 0"
         :name="item.productName"
-        :cost="parseInt(item.productCost)"/>
+        :cost="parseInt(item.productCost)"
+        @handleCartAction="handleCartAction"
+      />
     </div>
   </div>
 </template>
@@ -20,11 +22,17 @@
 import orderActions from '@/components/orderActions/orderActions'
 export default {
   name: 'Product',
+  emits: ['handleCartAction'],
   components: {
     orderActions
   },
   props: {
     item: Object
+  },
+  methods: {
+    handleCartAction () {
+      this.$emit('handleCartAction')
+    }
   }
 }
 </script>
