@@ -1,0 +1,25 @@
+.order-counter{
+  font-weight: 700;
+}
+.order-actions{
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button{
+    width: 40px;
+    height: 30px;
+    background: #678d54;
+    color: #fff;
+    border-radius: 7px;
+    transition: all ease .5s;
+    border: 2px solid transparent;
+    &:hover{
+      background: #fff;
+      border-color: #678d54;
+      color: #678d54;
+    }
+    //border: 5px solid transparent;
+  }
+}
