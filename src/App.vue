@@ -83,20 +83,20 @@ export default {
       }
     },
     handleCartAction () {
+      this.items.forEach((item) => {
+        item.count = 0
+      })
       const productsInCart = cartHandler.getProductsInCart()
-      this.sortItemsByCart(productsInCart)
       this.sumUpCost(productsInCart)
+      this.sortItemsByCart(productsInCart)
     }
   },
   created () {
     this.items = products.loadProducts()
-    this.items.forEach((item) => {
-      item.count = 0
-    })
     cartHandler.initialiseCart()
     const productsInCart = cartHandler.getProductsInCart()
-    this.sortItemsByCart(productsInCart)
     this.sumUpCost(productsInCart)
+    this.sortItemsByCart(productsInCart)
   }
 }
 </script>
